@@ -1,30 +1,24 @@
-from flask import Flask, request, jsonify
-from health_utils import calculate_bmi, calculate_bmr
+from flask import Flask, jsonify, request
+from utils import add_numbers, subtract_numbers
 
 app = Flask(__name__)
+
 @app.route('/')
-
 def home():
-    return "HealtApp Welcome Page !"
+    return "Welcome to the Flask API! This is the new message Octobre 25"
 
-@app.route('/bmi', methods=['POST'])
-def bmi():
+@app.route('/add', methods=['POST'])
+def add():
     data = request.json
-    height = data['height']
-    weight = data['weight']
-    result = calculate_bmi(height, weight)
-    return jsonify({"bmi": result})
+    result = add_numbers(data['a'], data['b'])
+    return jsonify({"result": result})
 
-@app.route('/bmr', methods=['POST'])
-def bmr():
+@app.route('/subtract', methods=['POST'])
+def subtract():
     data = request.json
-    height = data['height']
-    weight = data['weight']
-    age = data['age']
-    gender = data['gender']
-    result = calculate_bmr(height, weight, age, gender)
-    return jsonify({"bmr": result})
+    result = subtract_numbers(data['a'], data['b'])
+    return jsonify({"result": result})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)
 
